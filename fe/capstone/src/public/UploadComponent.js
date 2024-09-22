@@ -3,7 +3,7 @@ import chatbotIcon from "../assets/Artboard 8.png";
 
 const UploadComponent = ({ onUploadSuccess }) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [errorModalVisible, setErrorModalVisible] = useState(false); // State quản lý modal lỗi
+  const [errorModalVisible, setErrorModalVisible] = useState(false); 
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -11,9 +11,9 @@ const UploadComponent = ({ onUploadSuccess }) => {
 
   const handleNextStep = () => {
     if (!selectedFile) {
-      setErrorModalVisible(true); // Hiển thị modal lỗi nếu chưa chọn file
+      setErrorModalVisible(true); 
     } else {
-      onUploadSuccess(); // Chuyển sang bước tiếp theo
+      onUploadSuccess(); 
     }
   };
 
@@ -24,7 +24,7 @@ const UploadComponent = ({ onUploadSuccess }) => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-purple-600 to-purple-800">
       <img src={chatbotIcon} alt="Chatbot" className="w-32 h-32 mb-6" />
-      <h2 className="text-2xl font-bold mb-6">Upload PDF</h2>
+      <h2 className="text-2xl font-bold mb-6 text-white">Upload PDF</h2>
       <input
         type="file"
         onChange={handleFileChange}
@@ -38,7 +38,6 @@ const UploadComponent = ({ onUploadSuccess }) => {
         Bắt đầu trích xuất
       </button>
 
-      {/* Modal thông báo lỗi */}
       {errorModalVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-4 max-w-sm">

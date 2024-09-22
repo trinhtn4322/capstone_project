@@ -1,0 +1,79 @@
+/* index.css */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.w-full {
+  width: 100%;
+}
+.max-w-lg {
+  max-width: 32rem;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.mb-4 {
+  margin-bottom: 1rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
+.ml-4 {
+  margin-left: 1rem;
+}
+.text-center {
+  text-align: center;
+}
+.text-gray-300 {
+  color: #d1d5db;
+}
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.mt-8 {
+  margin-top: 2rem;
+}
+.p-4 {
+  padding: 1rem;
+}
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.left-1/2 {
+  left: 50%;
+}
+.transform {
+  transform: translateX(-50%);
+}
+
+.h-full {
+  height: 100%;
+}
+.z-0 {
+  z-index: 0;
+}
+.z-10 {
+  z-index: 10;
+}
+.font-bold {
+  font-weight: bold;
+}

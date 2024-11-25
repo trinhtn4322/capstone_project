@@ -1,30 +1,42 @@
+import { MdChat } from "react-icons/md"; // Thêm biểu tượng chat
+
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import UploadComponent from '../src/public/UploadComponent';
-import LoadingComponent from '../src/public/LoadingComponent';
-import ChatbotComponent from "../src/public/chatbot";
+import { FaComment } from 'react-icons/fa'; // Import icon (bạn có thể thay thế bằng bất kỳ icon nào bạn thích)
+import Chatbot from "../src/public/chatbot"; // Import component Chatbot
 
-function App() {
-  const [step, setStep] = useState(1); 
 
-  const handleUploadSuccess = () => {
-    setStep(2); 
-    setTimeout(() => {
-      setStep(3);  
-    }, 3000); 
-  };
+const App = () => {
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
-  const resetStep = () => {
-    setStep(1);  // Chuyển về bước 1: Upload
+  const toggleChatbot = () => {
+    setIsChatbotOpen(!isChatbotOpen);
   };
 
   return (
-    <div>
-      {step === 1 && <UploadComponent onUploadSuccess={handleUploadSuccess} resetStep={resetStep} />}
-      {step === 2 && <LoadingComponent />}
-      {step === 3 && <ChatbotComponent resetStep={resetStep} />}
+    <div className="App">
+      {/* Icon button để mở/đóng Chatbot */}
+      <div
+        className="chatbot-icon"
+        onClick={toggleChatbot}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          backgroundColor: '#25d366',
+          borderRadius: '50%',
+          padding: '15px',
+          cursor: 'pointer',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+          zIndex: 1000, // Đảm bảo icon luôn hiển thị trên cùng
+        }}
+      >
+        <FaComment size={30} color="white" />
+      </div>
+
+      {/* Hiển thị Chatbot nếu isChatbotOpen là true */}
+      {isChatbotOpen && <Chatbot />}
     </div>
   );
-}
+};
 
 export default App;

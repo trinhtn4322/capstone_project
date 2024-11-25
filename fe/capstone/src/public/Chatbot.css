@@ -1,0 +1,97 @@
+/* Chatbot.css */
+@keyframes slideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px); /* Bắt đầu từ dưới */
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0); /* Kết thúc ở vị trí ban đầu */
+    }
+  }
+  
+  .slide-up-effect {
+    animation: slideUp 0.5s ease-out forwards; /* Thời gian và hiệu ứng */
+  }
+/* Chatbot.css */
+@keyframes typing {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  
+/* Chatbot.css */
+.typing-effect {
+    display: inline-block;
+    opacity: 0;
+    animation: fadeIn 0.05s forwards; /* Tăng tốc độ hiệu ứng fade-in */
+    animation-delay: 0.1s; /* Đặt độ trễ cho mỗi chữ */
+    margin-right: 5px; /* Đảm bảo mỗi từ có khoảng cách giữa các chữ */
+    white-space: normal; /* Đảm bảo chữ không bị dính lại với nhau */
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+/* Ẩn thanh cuộn mặc định */
+.scrollbar-hide {
+    overflow: auto;
+  }
+  
+  /* Ẩn thanh cuộn trong các trình duyệt Webkit (Chrome, Safari) */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Khi hover (di chuột vào vùng cuộn), thanh cuộn sẽ hiển thị */
+  .scrollbar-hide:hover::-webkit-scrollbar {
+    display: block;
+    width: 1px; /* Độ rộng của thanh cuộn */
+    height: 8px; /* Độ cao của thanh cuộn */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3); /* Màu của thanh cuộn */
+    border-radius: 10px;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* Màu nền của thanh cuộn */
+  }
+  
+  .chatbot-container {
+    position: relative;
+  }
+  
+  .chatbot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .chatbot-window {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    max-width: 100%;
+    z-index: 999;
+    transition: transform 0.3s ease;
+    transform: translateY(100%);
+  }
+  
+  .chatbot-window.open {
+    transform: translateY(0);
+  }
+  

@@ -19,39 +19,8 @@ const handleDragEnter = () => setIsDragging(true);
 const handleDragLeave = () => setIsDragging(false);
 
   const messagesEndRef = useRef(null);
-  useEffect(() => {
-    if (Notification.permission === "default") {
-      Notification.requestPermission().then((permission) => {
-        if (permission !== "granted") {
-          console.warn("Notifications are disabled.");
-        }
-      });
-    }
-  }, []);
-  const showNotification = (title, body) => {
-    if (Notification.permission === "granted") {
-      new Notification(title, {
-        body,
-        icon: iconURL, // Sử dụng iconURL đã tạo
-      });
-      playNotificationSound(); // Phát âm thanh khi có thông báo
-    }
-  };
-  const playNotificationSound = () => {
-    const audio = new Audio("/notification.mp3");
-    audio.oncanplaythrough = () => {
-      console.log("Âm thanh đã sẵn sàng để phát!");
-      audio.play().catch((err) => console.error("Không thể phát âm thanh:", err));
-    };
-    audio.onerror = (e) => {
-      console.error("Lỗi khi tải tệp âm thanh:", e);
-    };
-  };
-  const generateIconAsDataURL = (IconComponent) => {
-    const svgString = ReactDOMServer.renderToString(<IconComponent size="32" color="pink" />);
-    const svgBlob = new Blob([svgString], { type: "image/svg+xml" });
-    return URL.createObjectURL(svgBlob);
-  };
+
+
   const handleDrop = (e) => {
     e.preventDefault();
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
@@ -111,24 +80,31 @@ const handleDragLeave = () => setIsDragging(false);
   
   
   // Tạo URL từ icon
-  const iconURL = generateIconAsDataURL(TbRobot);
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       // Kiểm tra loại file
       const isImage = selectedFile.type.startsWith("image/");
+      const isPDF = selectedFile.type === "application/pdf";
+  
+      if (!isImage && !isPDF) {
+        setErrorMessage("Vui lòng chọn một file hình ảnh hoặc PDF!");
+        return;
+      }
+  
+      // Hiển thị tệp lên giao diện
       const fileURL = URL.createObjectURL(selectedFile);
   
       if (isImage) {
-        // Hiển thị hình ảnh lên giao diện
         setMessages((prevMessages) => [
           ...prevMessages,
           { sender: "user1", text: "", image: fileURL },
         ]);
-      } else {
-        // Nếu không phải hình ảnh, hiển thị thông báo lỗi
-        setErrorMessage("Vui lòng chọn một file hình ảnh!");
-        return;
+      } else if (isPDF) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: "user1", text: "PDF đã được tải lên", fileURL },
+        ]);
       }
   
       // Upload file lên server
@@ -163,7 +139,7 @@ const handleDragLeave = () => setIsDragging(false);
       } finally {
         setIsLoading(false);
         setFile(null); // Xóa trạng thái file để cho phép chọn tệp khác
-      e.target.value = "";
+        e.target.value = "";
       }
     }
   };
@@ -180,14 +156,13 @@ const handleDragLeave = () => setIsDragging(false);
   const fetchChatbotResponse = async (query) => {
     setIsLoading(true);
     try {
-      const response = await axios.post("http://57.155.0.174:5005/webhooks/rest/webhook", {
+      const response = await axios.post("http://localhost:5005/webhooks/rest/webhook", {
         sender: "user",
         message: query,
       });
   
       // Nếu API trả về danh sách phản hồi
       if (response.data.length > 0) {
-        showNotification("Chatbot", response[0]);
         return response.data.map((message) => message.text || "Tin nhắn rỗng từ bot");
       } else {
         return ["Có lỗi xảy ra, vui lòng thử lại sau."];
@@ -240,7 +215,6 @@ const handleDragLeave = () => setIsDragging(false);
       handleSendMessage();
     }
   };
-
   
   return (
     <div className="flex h-screen p-[2vw] bg-[#f8f4f2]">
